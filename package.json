@@ -1,0 +1,14 @@
+{
+  "name": "iqra-portfolio",
+  "version": "1.0.0",
+  "description": "Iqra Choudhary's personal portfolio website with a working contact form backend.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.13",
+    "dotenv": "^16.4.5"
+  }
+}
