@@ -19,15 +19,28 @@ app.post('/api/contact', async (req, res) => {
   const { name, email, message } = req.body || {};
 
   if (!name || !email || !message) {
-    return res.status(400).json({ error: 'Please fill in all fields.' });
+    return res.status(400).json({
+      error: 'Please fill in all fields.'
+    });
   }
 
-  // If no email credentials are configured yet, just log the message
-  // instead of failing — useful while testing locally.
+  // If email credentials are not configured,
+  // log the message instead of failing.
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-    console.log('--- New contact form message (email not configured) ---');
-    console.log({ name, email, message });
-    return res.json({ ok: true, note: 'Logged locally (email not configured yet).' });
+    console.log(
+      '--- New contact form message (email not configured) ---'
+    );
+
+    console.log({
+      name,
+      email,
+      message
+    });
+
+    return res.json({
+      ok: true,
+      note: 'Logged locally (email not configured yet).'
+    });
   }
 
   try {
@@ -45,13 +58,26 @@ app.post('/api/contact', async (req, res) => {
       replyTo: email,
       subject: `New message from ${name} (via portfolio site)`,
       text: `From: ${name} <${email}>\n\n${message}`,
-      html: `<p><strong>From:</strong> ${name} (${email})</p><p>${message.replace(/\n/g, '<br>')}</p>`
+      html: `
+        <p>
+          <strong>From:</strong> ${name} (${email})
+        </p>
+        <p>
+          ${message.replace(/\n/g, '<br>')}
+        </p>
+      `
     });
 
-    res.json({ ok: true });
+    res.json({
+      ok: true
+    });
+
   } catch (err) {
     console.error('Email send failed:', err.message);
-    res.status(500).json({ error: 'Could not send message right now. Please try again later.' });
+
+    res.status(500).json({
+      error: 'Could not send message right now. Please try again later.'
+    });
   }
 });
 
