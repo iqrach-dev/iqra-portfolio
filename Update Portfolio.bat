@@ -13,7 +13,11 @@ git push origin main
 
 echo.
 echo ==============================
-echo       DONE!
+echo      OPENING PORTFOLIO
 echo ==============================
+echo.
+
+start http://localhost:3001
+
 echo.
 pause
